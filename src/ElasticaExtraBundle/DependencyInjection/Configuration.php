@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('elasticsearch_extra_bundle');
+        $rootNode = $treeBuilder->root('elastica_extra_bundle');
 
         $rootNode
             ->children()
