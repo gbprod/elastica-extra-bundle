@@ -32,7 +32,7 @@ class PutIndexMappingsCommand extends ElasticaAwareCommand
         $type   = $input->getArgument('type');
 
         $output->writeln(sprintf(
-            '<info>Put type <comment>%s</comment> mappings for index <comment>%s</comment> ' .
+            '<info>Put type <comment>%s</comment> mappings for index <comment>%s</comment> '.
             'client <comment>%s</comment>...</info>',
             $type,
             $index,
