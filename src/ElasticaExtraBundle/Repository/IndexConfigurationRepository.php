@@ -48,14 +48,18 @@ class IndexConfigurationRepository
     public function getSettings($index)
     {
         $config = $this->get($index);
-        
-        if (null !== $config && isset($config['settings'])) {
-            return $config['settings'];
+
+        if (null === $config) {
+            return null;
         }
 
-        return null;
+        if (!isset($config['settings'])) {
+            return [];
+        }
+
+        return $config['settings'];
     }
-    
+
     /**
      * Get mappings for an index
      *
@@ -66,14 +70,14 @@ class IndexConfigurationRepository
     public function getMappings($index)
     {
         $config = $this->get($index);
-        
+
         if (null === $config || !isset($config['mappings'])) {
             return null;
         }
-        
+
         return $config['mappings'];
     }
-    
+
     /**
      * Get mapping for a type
      *
@@ -85,11 +89,15 @@ class IndexConfigurationRepository
     public function getMapping($index, $type)
     {
         $mappings = $this->getMappings($index);
-        
+
         if (!isset($mappings[$type])) {
             return null;
         }
-        
-        return $mappings[$type];
+
+        if (!isset($mappings[$type]['properties'])) {
+            return [];
+        }
+
+        return $mappings[$type]['properties'];
     }
 }

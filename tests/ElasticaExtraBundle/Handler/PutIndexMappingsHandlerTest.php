@@ -20,29 +20,31 @@ class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
         $config = [
             'my_index' => [
                 'mappings' => [
-                    'my_type' => ['config'],
+                    'my_type' => [
+                        'properties' => ['config'],
+                    ],
                     'my_type_2' => ['config'],
                 ],
             ],
         ];
-        
+
         $repository = new IndexConfigurationRepository($config);
 
         $type = $this->newType();
         $index = $this->newIndex('my_type', $type);
         $client = $this->newClient('my_index', $index);
-        
+
         $testedInstance = new PutIndexMappingsHandler($repository);
-        
+
         $type
             ->expects($this->once())
             ->method('setMapping')
             ->with(['config'])
         ;
-        
+
         $testedInstance->handle($client, 'my_index', 'my_type');
     }
-    
+
     private function newType()
     {
         return $this
@@ -58,14 +60,14 @@ class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        
+
         $index
             ->expects($this->any())
             ->method('getType')
             ->with($typeName)
             ->willReturn($type)
         ;
-        
+
         return $index;
     }
 
@@ -83,10 +85,10 @@ class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
             ->with($indexName)
             ->willReturn($index)
         ;
-        
+
         return $client;
     }
-    
+
     public function testHandleThrowExceptionIfNoMapping()
     {
         $repository = new IndexConfigurationRepository([]);
@@ -94,9 +96,9 @@ class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
         $type = $this->newType();
         $index = $this->newIndex('my_type', $type);
         $client = $this->newClient('my_index', $index);
-        
+
         $testedInstance = new PutIndexMappingsHandler($repository);
-        
+
         $this->setExpectedException(\InvalidArgumentException::class);
 
         $testedInstance->handle($client, 'my_index', 'my_type');
