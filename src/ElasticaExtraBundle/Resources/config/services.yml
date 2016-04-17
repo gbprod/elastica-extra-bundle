@@ -1,0 +1,20 @@
+services:
+    gbprod.elastica_extra.create_index_handler:
+        class: GBProd\ElasticaExtraBundle\Handler\CreateIndexHandler
+        arguments:
+            - "@gbprod.elastica_extra.index_configuration_repository"
+
+    gbprod.elastica_extra.delete_index_handler:
+        class: GBProd\ElasticaExtraBundle\Handler\DeleteIndexHandler
+        arguments:
+            - "@gbprod.elastica_extra.index_configuration_repository"
+
+    gbprod.elastica_extra.put_index_settings_handler:
+        class: GBProd\ElasticaExtraBundle\Handler\PutIndexSettingsHandler
+        arguments:
+            - "@gbprod.elastica_extra.index_configuration_repository"
+
+    gbprod.elastica_extra.put_index_mappings_handler:
+        class: GBProd\ElasticaExtraBundle\Handler\PutIndexMappingsHandler
+        arguments:
+            - "@gbprod.elastica_extra.index_configuration_repository"
