@@ -8,11 +8,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command to create index
+ * Command to list aliases
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class CreateIndexCommand extends ElasticaAwareCommand
+class ListAliasCommand extends ElasticaAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -20,8 +20,8 @@ class CreateIndexCommand extends ElasticaAwareCommand
     protected function configure()
     {
         $this
-            ->setName('elasticsearch:index:create')
-            ->setDescription('Create index from configuration')
+            ->setName('elasticsearch:alias:list')
+            ->setDescription('List index aliases')
             ->addArgument('index', InputArgument::REQUIRED, 'Which index ?')
             ->addOption('client', null, InputOption::VALUE_REQUIRED, 'Client to use (if not default)', null)
         ;
@@ -36,18 +36,17 @@ class CreateIndexCommand extends ElasticaAwareCommand
         $index  = $input->getArgument('index');
 
         $output->writeln(sprintf(
-            '<info>Creating index <comment>%s</comment> for client <comment>%s</comment></info>',
-            $index,
-            $input->getOption('client')
+            '<info>Aliases for index <comment>%s</comment></info>',
+            $index
         ));
 
-        $handler = $this
-            ->getContainer()
-            ->get('gbprod.elastica_extra.create_index_handler')
+        $aliases = $client
+            ->getIndex($index)
+            ->getAliases()
         ;
 
-        $handler->handle($client, $index);
-
-        $output->writeln('done');
+        foreach ($aliases as $alias) {
+            $output->writeln(' * ' . $alias);
+        }
     }
 }

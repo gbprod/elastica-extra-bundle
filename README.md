@@ -34,13 +34,13 @@ public function registerBundles()
 
 ```yml
 gbprod_elastica_extra:
-    default_client: 'elastica.default_client' # Elastica client service's name 
+    default_client: 'elastica.default_client' # Elastica client service's name
 ```
 
 You can create Elastica client using a bundle like:
-  * [FOSElasticaBundle](https://github.com/FriendsOfSymfony/FOSElasticaBundle)  
+  * [FOSElasticaBundle](https://github.com/FriendsOfSymfony/FOSElasticaBundle)
     Service name will look like `fos_elastica.client.my_client`
-  * My lightweight bundle [ElasticaBundle](https://github.com/gbprod/elastica-bundle)  
+  * My lightweight bundle [ElasticaBundle](https://github.com/gbprod/elastica-bundle)
     Service name will look like `elastica.default_client`
   * DIY
 
@@ -94,6 +94,32 @@ php app/console elasticsearch:index:put_settings my_index
 
 ```bash
 php app/console elasticsearch:index:put_mappings my_index my_type
+```
+
+## Aliases Management Operations
+
+### List aliases for an index
+
+```bash
+php app/console elasticsearch:alias:list my_index
+```
+
+### Add alias for an index
+
+```bash
+php app/console elasticsearch:alias:add my_index my_alias
+```
+
+If `--replace` options is set, an existing alias will be replaced
+
+```bash
+php app/console elasticsearch:alias:add my_index my_alias --replace
+```
+
+### Remove alias for an index
+
+```bash
+php app/console elasticsearch:alias:remove my_index my_alias
 ```
 
 ### Use a different client

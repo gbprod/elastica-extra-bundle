@@ -8,11 +8,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command to create index
+ * Command to add alias
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class CreateIndexCommand extends ElasticaAwareCommand
+class AddAliasCommand extends ElasticaAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -20,9 +20,11 @@ class CreateIndexCommand extends ElasticaAwareCommand
     protected function configure()
     {
         $this
-            ->setName('elasticsearch:index:create')
-            ->setDescription('Create index from configuration')
+            ->setName('elasticsearch:alias:add')
+            ->setDescription('Add alias to an index')
             ->addArgument('index', InputArgument::REQUIRED, 'Which index ?')
+            ->addArgument('alias', InputArgument::REQUIRED, 'Alias name')
+            ->addOption('replace', null, InputOption::VALUE_NONE, 'If set, an existing alias will be replaced')
             ->addOption('client', null, InputOption::VALUE_REQUIRED, 'Client to use (if not default)', null)
         ;
     }
@@ -32,21 +34,22 @@ class CreateIndexCommand extends ElasticaAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $client = $this->getClient($input->getOption('client'));
-        $index  = $input->getArgument('index');
+        $client  = $this->getClient($input->getOption('client'));
+        $index   = $input->getArgument('index');
+        $alias   = $input->getArgument('alias');
+        $replace = $input->getOption('replace');
 
         $output->writeln(sprintf(
-            '<info>Creating index <comment>%s</comment> for client <comment>%s</comment></info>',
-            $index,
-            $input->getOption('client')
+            '<info>Add alias <comment>%s</comment> for index <comment>%s</comment></info>',
+            $alias,
+            $index
         ));
 
-        $handler = $this
+        $this
             ->getContainer()
-            ->get('gbprod.elastica_extra.create_index_handler')
+            ->get('gbprod.elastica_extra.add_alias_handler')
+            ->handle($client, $index, $alias, $replace);
         ;
-
-        $handler->handle($client, $index);
 
         $output->writeln('done');
     }
