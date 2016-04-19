@@ -46,7 +46,7 @@ class ListAliasCommand extends ElasticaAwareCommand
         ;
 
         foreach ($aliases as $alias) {
-            $output->writeln(' * ' . $alias);
+            $output->writeln(' * '.$alias);
         }
     }
 }
