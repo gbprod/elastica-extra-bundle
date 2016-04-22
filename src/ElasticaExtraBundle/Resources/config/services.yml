@@ -18,3 +18,9 @@ services:
         class: GBProd\ElasticaExtraBundle\Handler\PutIndexMappingsHandler
         arguments:
             - "@gbprod.elastica_extra.index_configuration_repository"
+
+    gbprod.elastica_extra.add_alias_handler:
+        class: GBProd\ElasticaExtraBundle\Handler\AddAliasHandler
+
+    gbprod.elastica_extra.remove_alias_handler:
+        class: GBProd\ElasticaExtraBundle\Handler\RemoveAliasHandler

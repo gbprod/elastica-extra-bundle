@@ -4,10 +4,12 @@ namespace Tests\GBProd\ElasticaExtraBundle\DependencyInjection;
 
 use Elastica\Client;
 use GBProd\ElasticaExtraBundle\DependencyInjection\ElasticaExtraExtension;
+use GBProd\ElasticaExtraBundle\Handler\AddAliasHandler;
 use GBProd\ElasticaExtraBundle\Handler\CreateIndexHandler;
 use GBProd\ElasticaExtraBundle\Handler\DeleteIndexHandler;
 use GBProd\ElasticaExtraBundle\Handler\PutIndexMappingsHandler;
 use GBProd\ElasticaExtraBundle\Handler\PutIndexSettingsHandler;
+use GBProd\ElasticaExtraBundle\Handler\RemoveAliasHandler;
 use GBProd\ElasticaExtraBundle\Repository\IndexConfigurationRepository;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -44,6 +46,8 @@ class ElasticaExtraExtensionTest extends \PHPUnit_Framework_TestCase
             ['gbprod.elastica_extra.delete_index_handler', DeleteIndexHandler::class],
             ['gbprod.elastica_extra.put_index_settings_handler', PutIndexSettingsHandler::class],
             ['gbprod.elastica_extra.put_index_mappings_handler', PutIndexMappingsHandler::class],
+            ['gbprod.elastica_extra.add_alias_handler', AddAliasHandler::class],
+            ['gbprod.elastica_extra.remove_alias_handler', RemoveAliasHandler::class],
         ];
     }
 
