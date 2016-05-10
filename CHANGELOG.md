@@ -4,7 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/gbprod/elastica-extra-bundle/compare/v0.2.0...HEAD)
 
-## [0.2.0](https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...v0.2.0)
+### Changed
+- Upgrade to elastica 3.2
+- Use codecov for coverage instead of scrutinizer
+
+## [0.2.0](https://github.com/gbprod/elastica-extra-bundle/compare/v0.1.0...v0.2.0)
 
 ### Added
 - `elasticsearch:alias:list` command
