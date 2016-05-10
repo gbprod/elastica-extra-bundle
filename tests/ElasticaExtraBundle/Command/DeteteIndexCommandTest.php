@@ -5,6 +5,7 @@ namespace Tests\GBProd\ElasticaExtraBundle\Command;
 use Elastica\Client;
 use GBProd\ElasticaExtraBundle\Command\DeleteIndexCommand;
 use GBProd\ElasticaExtraBundle\Handler\DeleteIndexHandler;
+use GBProd\ElasticaExtraBundle\Exception\IndexNotFoundException;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\DependencyInjection\Container;
@@ -99,5 +100,38 @@ class DeleteIndexCommandTest extends \PHPUnit_Framework_TestCase
         ;
 
         $testedInstance->run($input, $output);
+    }
+
+    public function testDeleleWillNotFailIfIndexNotExists()
+    {
+        $testedInstance = new DeleteIndexCommand();
+
+        $handler = $this->newDeleteIndexHandler();
+        $client = $this->newClient();
+        $container = $this->createContainer([
+            'gbprod.elastica_extra.default_client' => $client,
+            'gbprod.elastica_extra.delete_index_handler' => $handler,
+        ]);
+        $testedInstance->setContainer($container);
+
+        $input = new ArrayInput([
+            'index'    => 'my_index',
+            '--force'  => true,
+        ]);
+
+        $output = new NullOutput();
+
+        $handler
+            ->expects($this->once())
+            ->method('handle')
+            ->with($client, 'my_index')
+            ->will($this->throwException(new IndexNotFoundException('my_index')))
+        ;
+
+        try {
+            $testedInstance->run($input, $output);
+        } catch(\Exception $e) {
+            $this->fail('This should not happens');
+        }
     }
 }
