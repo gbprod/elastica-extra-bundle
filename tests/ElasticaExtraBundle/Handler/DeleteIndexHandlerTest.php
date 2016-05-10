@@ -4,7 +4,7 @@ namespace Tests\GBProd\ElasticaExtraBundle\Handler;
 
 use Elastica\Client;
 use Elastica\Index;
-use GBProd\ElasticaExtraBundle\Repository\IndexConfigurationRepository;
+use GBProd\ElasticaExtraBundle\Exception\IndexNotFoundException;
 use GBProd\ElasticaExtraBundle\Handler\DeleteIndexHandler;
 
 /**
@@ -16,21 +16,25 @@ class DeleteIndexHandlerTest extends \PHPUnit_Framework_TestCase
 {
     public function testHandle()
     {
-        $config = ['my' => ['awesome' => 'config']];
-        
         $index = $this->newIndex();
         $client = $this->newClient('my_index', $index);
-        
+
         $testedInstance = new DeleteIndexHandler($repository);
-        
+
         $index
             ->expects($this->once())
             ->method('delete')
         ;
-        
+
+        $index
+            ->expects($this->any())
+            ->method('exists')
+            ->willReturn(true)
+        ;
+
         $testedInstance->handle($client, 'my_index');
     }
-    
+
     private function newIndex()
     {
         return $this
@@ -54,7 +58,30 @@ class DeleteIndexHandlerTest extends \PHPUnit_Framework_TestCase
             ->with($indexName)
             ->willReturn($index)
         ;
-        
+
         return $client;
+    }
+
+    public function testHandleOnNotExistingIndexThrowException()
+    {
+        $index = $this->newIndex();
+        $client = $this->newClient('my_index', $index);
+
+        $testedInstance = new DeleteIndexHandler($repository);
+
+        $index
+            ->expects($this->never())
+            ->method('delete')
+        ;
+
+        $index
+            ->expects($this->any())
+            ->method('exists')
+            ->willReturn(false)
+        ;
+
+        $this->setExpectedException(IndexNotFoundException::class);
+
+        $testedInstance->handle($client, 'my_index');
     }
 }

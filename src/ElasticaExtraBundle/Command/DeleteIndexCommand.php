@@ -56,7 +56,14 @@ class DeleteIndexCommand extends ElasticaAwareCommand
             ->get('gbprod.elastica_extra.delete_index_handler')
         ;
 
-        $handler->handle($client, $index);
+        try {
+            $handler->handle($client, $index);
+        } catch (IndexNotFoundException $e) {
+            $output->writeln(sprintf(
+                '<info>Index "%s" not found</info>',
+                $index
+            ));
+        }
 
         $output->writeln('done');
     }
