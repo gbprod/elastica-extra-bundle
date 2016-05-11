@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Upgrade to elastica 3.2
 - Use codecov for coverage instead of scrutinizer
+- Delete not existing index will not throw exception anymore (replace by a info message)
 
 ## [0.2.0](https://github.com/gbprod/elastica-extra-bundle/compare/v0.1.0...v0.2.0)
 

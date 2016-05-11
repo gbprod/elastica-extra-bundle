@@ -2,6 +2,7 @@
 
 namespace GBProd\ElasticaExtraBundle\Command;
 
+use GBProd\ElasticaExtraBundle\Exception\IndexNotFoundException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -56,7 +57,14 @@ class DeleteIndexCommand extends ElasticaAwareCommand
             ->get('gbprod.elastica_extra.delete_index_handler')
         ;
 
-        $handler->handle($client, $index);
+        try {
+            $handler->handle($client, $index);
+        } catch (IndexNotFoundException $e) {
+            $output->writeln(sprintf(
+                '<info>Index "%s" not found</info>',
+                $index
+            ));
+        }
 
         $output->writeln('done');
     }

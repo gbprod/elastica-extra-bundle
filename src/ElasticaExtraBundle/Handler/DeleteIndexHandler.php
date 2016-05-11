@@ -2,6 +2,7 @@
 
 namespace GBProd\ElasticaExtraBundle\Handler;
 
+use GBProd\ElasticaExtraBundle\Exception\IndexNotFoundException;
 use Elastica\Client;
 
 /**
@@ -16,9 +17,17 @@ class DeleteIndexHandler
      *
      * @param Client $client
      * @param string $index
+     *
+     * @throws IndexNotFoundException
      */
     public function handle(Client $client, $index)
     {
-        $client->getIndex($index)->delete();
+        $index = $client->getIndex($index);
+
+        if (!$index->exists()) {
+            throw new IndexNotFoundException($index);
+        }
+
+        $index->delete();
     }
 }
