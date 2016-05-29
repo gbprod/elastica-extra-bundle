@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/gbprod/elastica-extra-bundle.svg?branch=master)](https://travis-ci.org/gbprod/elastica-extra-bundle)
 [![codecov](https://codecov.io/gh/gbprod/elastica-extra-bundle/branch/master/graph/badge.svg)](https://codecov.io/gh/gbprod/elastica-extra-bundle)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gbprod/elastica-extra-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gbprod/elastica-extra-bundle/?branch=master)
+[![Dependency Status](https://www.versioneye.com/user/projects/574a9ca2ce8d0e004505fa46/badge.svg)](https://www.versioneye.com/user/projects/574a9ca2ce8d0e004505fa46)
 
 [![Latest Stable Version](https://poser.pugx.org/gbprod/elastica-extra-bundle/v/stable)](https://packagist.org/packages/gbprod/elastica-extra-bundle)
 [![Total Downloads](https://poser.pugx.org/gbprod/elastica-extra-bundle/downloads)](https://packagist.org/packages/gbprod/elastica-extra-bundle)

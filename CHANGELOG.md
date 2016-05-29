@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/gbprod/elastica-extra-bundle/compare/v0.3.0...HEAD)
 
+Removed
+
+- composer.lock is not in sources anymore
+
+Added
+
+ - VersionEye badge
+ - Scrutinizer checks PSR2 codestyle
+
 ## [0.3.0](https://github.com/gbprod/elastica-extra-bundle/compare/v0.2.0...v0.3.0)
 
 ### Changed
