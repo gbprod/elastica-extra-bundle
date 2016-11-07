@@ -22,6 +22,7 @@ class PutIndexMappingsCommand extends ElasticaAwareCommand
             ->addArgument('index', InputArgument::REQUIRED, 'Which index ?')
             ->addArgument('type', InputArgument::REQUIRED, 'Which type ?')
             ->addOption('client', null, InputOption::VALUE_REQUIRED, 'Client to use (if not default)', null)
+            ->addOption('config', null, InputOption::VALUE_REQUIRED, 'Index configuration to use (if not the same as index argument)', null)
         ;
     }
 
@@ -30,6 +31,7 @@ class PutIndexMappingsCommand extends ElasticaAwareCommand
         $client = $this->getClient($input->getOption('client'));
         $index  = $input->getArgument('index');
         $type   = $input->getArgument('type');
+        $config = $input->getOption('config') ?: $index;
 
         $output->writeln(sprintf(
             '<info>Put type <comment>%s</comment> mappings for index <comment>%s</comment> '.
@@ -44,7 +46,7 @@ class PutIndexMappingsCommand extends ElasticaAwareCommand
             ->get('gbprod.elastica_extra.put_index_mappings_handler')
         ;
 
-        $handler->handle($client, $index, $type);
+        $handler->handle($client, $index, $type, $config);
 
         $output->writeln('done');
     }

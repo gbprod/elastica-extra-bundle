@@ -15,14 +15,14 @@ class PutIndexMappingsHandler
     /**
      * @var IndexConfigurationRepository
      */
-    private $configurationRepository;
+    private $configurations;
 
     /**
-     * @param IndexConfigurationRepository $configurationRepository
+     * @param IndexConfigurationRepository $configurations
      */
-    public function __construct(IndexConfigurationRepository $configurationRepository)
+    public function __construct(IndexConfigurationRepository $configurations)
     {
-        $this->configurationRepository = $configurationRepository;
+        $this->configurations = $configurations;
     }
 
     /**
@@ -30,10 +30,12 @@ class PutIndexMappingsHandler
      *
      * @param Client $client
      * @param string $index
+     * @param string $type
+     * @param string $configName
      */
-    public function handle(Client $client, $index, $type)
+    public function handle(Client $client, $index, $type, $configName)
     {
-        $mapping = $this->configurationRepository->getMapping($index, $type);
+        $mapping = $this->configurations->getMapping($configName, $type);
 
         if (!$mapping) {
             throw new \InvalidArgumentException();

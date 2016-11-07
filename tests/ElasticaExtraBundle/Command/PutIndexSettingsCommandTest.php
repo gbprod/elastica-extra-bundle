@@ -19,12 +19,12 @@ class PutIndexSettingsCommandTest extends \PHPUnit_Framework_TestCase
     public function testPutIndexSettingsCallsHandler()
     {
         $testedInstance = new PutIndexSettingsCommand();
-        $handler = $this->newPutIndexSettingsHandler();
-        $client = $this->newClient();
+        $handler = $this->prophesize(PutIndexSettingsHandler::class);
+        $client = $this->prophesize(Client::class);
 
         $container = $this->createContainer([
-            'gbprod.elastica_extra.default_client' => $client,
-            'gbprod.elastica_extra.put_index_settings_handler' => $handler,
+            'gbprod.elastica_extra.default_client' => $client->reveal(),
+            'gbprod.elastica_extra.put_index_settings_handler' => $handler->reveal(),
         ]);
 
         $testedInstance->setContainer($container);
@@ -36,34 +36,11 @@ class PutIndexSettingsCommandTest extends \PHPUnit_Framework_TestCase
         $output = new NullOutput();
 
         $handler
-            ->expects($this->once())
-            ->method('handle')
-            ->with($client, 'my_index')
+            ->handle($client, 'my_index', 'my_index')
+            ->shouldBeCalled()
         ;
 
         $testedInstance->run($input, $output);
-    }
-
-    private function newPutIndexSettingsHandler()
-    {
-        $handler = $this
-            ->getMockBuilder(PutIndexSettingsHandler::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        return $handler;
-    }
-
-    private function newClient()
-    {
-        $client = $this
-            ->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        return $client;
     }
 
     public function createContainer($services)
@@ -75,5 +52,33 @@ class PutIndexSettingsCommandTest extends \PHPUnit_Framework_TestCase
         }
 
         return $container;
+    }
+
+    public function testPutIndexSettingsWithDifferentConfiguration()
+    {
+        $testedInstance = new PutIndexSettingsCommand();
+        $handler = $this->prophesize(PutIndexSettingsHandler::class);
+        $client = $this->prophesize(Client::class);
+
+        $container = $this->createContainer([
+            'gbprod.elastica_extra.default_client' => $client->reveal(),
+            'gbprod.elastica_extra.put_index_settings_handler' => $handler->reveal(),
+        ]);
+
+        $testedInstance->setContainer($container);
+
+        $input = new ArrayInput([
+            'index'    => 'my_index',
+            '--config' => 'my_config',
+        ]);
+
+        $output = new NullOutput();
+
+        $handler
+            ->handle($client, 'my_index', 'my_config')
+            ->shouldBeCalled()
+        ;
+
+        $testedInstance->run($input, $output);
     }
 }
