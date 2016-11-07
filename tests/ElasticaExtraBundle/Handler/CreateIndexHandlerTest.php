@@ -17,72 +17,55 @@ class CreateIndexHandlerTest extends \PHPUnit_Framework_TestCase
     public function testHandle()
     {
         $config =  [
-            'my_index' => [
+            'my_config' => [
                 'settings' => [
                     'awesome' => 'config'
-                    ],
+                ],
                 'foo' => 'bar',
             ]
         ];
-        
-        $index = $this->newIndex();
-        $client = $this->newClient('my_index', $index);
-        
+
+        $index = $this->prophesize(Index::class);
+        $client = $this->newClient('my_index', $index->reveal());
+
         $repository = new IndexConfigurationRepository($config);
-        
+
         $testedInstance = new CreateIndexHandler($repository);
-        
-        $index
-            ->expects($this->once())
-            ->method('create')
-            ->with([
+
+        $index->create([
                 'settings' => [
                     'awesome' => 'config'
-                    ],
+                ],
                 'foo' => 'bar',
             ])
+            ->shouldBeCalled()
         ;
-        
-        $testedInstance->handle($client, 'my_index');
-    }
-    
-    private function newIndex()
-    {
-        return $this
-            ->getMockBuilder(Index::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+
+        $testedInstance->handle($client->reveal(), 'my_index', 'my_config');
     }
 
     private function newClient($indexName, $index)
     {
-        $client = $this
-            ->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+        $client = $this->prophesize(Client::class);
 
         $client
-            ->expects($this->any())
-            ->method('getIndex')
-            ->with($indexName)
+            ->getIndex($indexName)
             ->willReturn($index)
         ;
-        
+
         return $client;
     }
-    
+
     public function testHandleThrowExceptionIfNoConfiguration()
     {
-        $index = $this->newIndex();
-        $client = $this->newClient('my_index', $index);
+        $index = $this->prophesize(Index::class);
+        $client = $this->newClient('my_index', $index->reveal());
         $repository = new IndexConfigurationRepository([]);
-        
+
         $testedInstance = new CreateIndexHandler($repository);
-        
+
         $this->setExpectedException(\InvalidArgumentException::class);
-        
-        $testedInstance->handle($client, 'my_index');
+
+        $testedInstance->handle($client->reveal(), 'my_index', 'my_config');
     }
 }

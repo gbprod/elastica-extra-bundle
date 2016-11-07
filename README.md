@@ -75,8 +75,16 @@ elastica_extra:
 
 ### Create index
 
+Will create index using his configuration.
+
 ```bash
 php app/console elasticsearch:index:create my_index
+```
+
+Will create index using another index configuration (usefull to use aliases)
+
+```bash
+php app/console elasticsearch:index:create my_versionned_index --config=my_index
 ```
 
 ### Delete index
