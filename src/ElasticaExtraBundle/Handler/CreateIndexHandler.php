@@ -15,14 +15,14 @@ class CreateIndexHandler
     /**
      * @var IndexConfigurationRepository
      */
-    private $configurationRepository;
+    private $configurations;
 
     /**
-     * @param IndexConfigurationRepository $configurationRepository
+     * @param IndexConfigurationRepository $configurations
      */
-    public function __construct(IndexConfigurationRepository $configurationRepository)
+    public function __construct(IndexConfigurationRepository $configurations)
     {
-        $this->configurationRepository = $configurationRepository;
+        $this->configurations = $configurations;
     }
 
     /**
@@ -30,10 +30,11 @@ class CreateIndexHandler
      *
      * @param Client $client
      * @param string $index
+     * @param string $configName
      */
-    public function handle(Client $client, $index)
+    public function handle(Client $client, $index, $configName)
     {
-        $config = $this->configurationRepository->get($index);
+        $config = $this->configurations->get($configName);
 
         if (null === $config) {
             throw new \InvalidArgumentException();

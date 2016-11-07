@@ -20,12 +20,12 @@ class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
     public function testCreateIndexCallsHandler()
     {
         $testedInstance = new CreateIndexCommand();
-        $handler = $this->newCreateIndexHandler();
-        $client = $this->newClient();
+        $handler = $this->prophesize(CreateIndexHandler::class);
+        $client = $this->prophesize(Client::class);
 
         $container = $this->createContainer([
-            'gbprod.elastica_extra.default_client' => $client,
-            'gbprod.elastica_extra.create_index_handler' => $handler,
+            'gbprod.elastica_extra.default_client' => $client->reveal(),
+            'gbprod.elastica_extra.create_index_handler' => $handler->reveal(),
         ]);
 
         $testedInstance->setContainer($container);
@@ -37,35 +37,13 @@ class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
         $output = new NullOutput();
 
         $handler
-            ->expects($this->once())
-            ->method('handle')
-            ->with($client, 'my_index')
+            ->handle($client->reveal(), 'my_index', 'my_index')
+            ->shouldBeCalled()
         ;
 
         $testedInstance->run($input, $output);
     }
 
-    private function newCreateIndexHandler()
-    {
-        $handler = $this
-            ->getMockBuilder(CreateIndexHandler::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        return $handler;
-    }
-
-    private function newClient()
-    {
-        $client = $this
-            ->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        return $client;
-    }
 
     public function createContainer($services)
     {
@@ -81,10 +59,10 @@ class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
     public function testThrowExceptionIfClientNotFound()
     {
         $testedInstance = new CreateIndexCommand();
-        $handler = $this->newCreateIndexHandler();
+        $handler = $this->prophesize(CreateIndexHandler::class);
 
         $container = $this->createContainer([
-            'gbprod.elastica_extra.create_index_handler' => $handler,
+            'gbprod.elastica_extra.create_index_handler' => $handler->reveal(),
         ]);
 
         $testedInstance->setContainer($container);
@@ -103,11 +81,11 @@ class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
     public function testThrowExceptionIfClientIsNotInstanceOfClient()
     {
         $testedInstance = new CreateIndexCommand();
-        $handler = $this->newCreateIndexHandler();
+        $handler = $this->prophesize(CreateIndexHandler::class);
 
         $container = $this->createContainer([
             'gbprod.elastica_extra.default_client' => new \stdClass(),
-            'gbprod.elastica_extra.create_index_handler' => $handler,
+            'gbprod.elastica_extra.create_index_handler' => $handler->reveal(),
         ]);
 
         $testedInstance->setContainer($container);
@@ -126,12 +104,12 @@ class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecuteOnDifferentClient()
     {
         $testedInstance = new CreateIndexCommand();
-        $handler = $this->newCreateIndexHandler();
-        $client = $this->newClient();
+        $handler = $this->prophesize(CreateIndexHandler::class);
+        $client = $this->prophesize(Client::class);
 
         $container = $this->createContainer([
-            'my_custom_client' => $client,
-            'gbprod.elastica_extra.create_index_handler' => $handler,
+            'my_custom_client' => $client->reveal(),
+            'gbprod.elastica_extra.create_index_handler' => $handler->reveal(),
         ]);
 
         $testedInstance->setContainer($container);
@@ -144,9 +122,36 @@ class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
         $output = new NullOutput();
 
         $handler
-            ->expects($this->once())
-            ->method('handle')
-            ->with($client, 'my_index')
+            ->handle($client->reveal(), 'my_index', 'my_index')
+            ->shouldBeCalled()
+        ;
+
+        $testedInstance->run($input, $output);
+    }
+
+    public function testExecuteWithDifferentConfig()
+    {
+        $testedInstance = new CreateIndexCommand();
+        $handler = $this->prophesize(CreateIndexHandler::class);
+        $client = $this->prophesize(Client::class);
+
+        $container = $this->createContainer([
+            'gbprod.elastica_extra.default_client'       => $client->reveal(),
+            'gbprod.elastica_extra.create_index_handler' => $handler->reveal(),
+        ]);
+
+        $testedInstance->setContainer($container);
+
+        $input = new ArrayInput([
+            'index'  => 'my_index',
+            '--config'  => 'my_custom_config',
+        ]);
+
+        $output = new NullOutput();
+
+        $handler
+            ->handle($client->reveal(), 'my_index', 'my_custom_config')
+            ->shouldBeCalled()
         ;
 
         $testedInstance->run($input, $output);
