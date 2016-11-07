@@ -19,12 +19,12 @@ class PutIndexMappingsCommandTest extends \PHPUnit_Framework_TestCase
     public function testPutIndexMappingsCallsHandler()
     {
         $testedInstance = new PutIndexMappingsCommand();
-        $handler = $this->newPutIndexMappingsHandler();
-        $client = $this->newClient();
+        $handler = $this->prophesize(PutIndexMappingsHandler::class);
+        $client = $this->prophesize(Client::class);
 
         $container = $this->createContainer([
-            'gbprod.elastica_extra.default_client' => $client,
-            'gbprod.elastica_extra.put_index_mappings_handler' => $handler,
+            'gbprod.elastica_extra.default_client' => $client->reveal(),
+            'gbprod.elastica_extra.put_index_mappings_handler' => $handler->reveal(),
         ]);
 
         $testedInstance->setContainer($container);
@@ -37,34 +37,11 @@ class PutIndexMappingsCommandTest extends \PHPUnit_Framework_TestCase
         $output = new NullOutput();
 
         $handler
-            ->expects($this->once())
-            ->method('handle')
-            ->with($client, 'my_index', 'my_type')
+            ->handle($client->reveal(), 'my_index', 'my_type', 'my_index')
+            ->shouldBeCalled()
         ;
 
         $testedInstance->run($input, $output);
-    }
-
-    private function newPutIndexMappingsHandler()
-    {
-        $handler = $this
-            ->getMockBuilder(PutIndexMappingsHandler::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        return $handler;
-    }
-
-    private function newClient()
-    {
-        $client = $this
-            ->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        return $client;
     }
 
     public function createContainer($services)
@@ -76,5 +53,34 @@ class PutIndexMappingsCommandTest extends \PHPUnit_Framework_TestCase
         }
 
         return $container;
+    }
+
+    public function testPutIndexMappingsWithDifferentConfig()
+    {
+        $testedInstance = new PutIndexMappingsCommand();
+        $handler = $this->prophesize(PutIndexMappingsHandler::class);
+        $client = $this->prophesize(Client::class);
+
+        $container = $this->createContainer([
+            'gbprod.elastica_extra.default_client' => $client->reveal(),
+            'gbprod.elastica_extra.put_index_mappings_handler' => $handler->reveal(),
+        ]);
+
+        $testedInstance->setContainer($container);
+
+        $input = new ArrayInput([
+            'index'    => 'my_index',
+            'type'     => 'my_type',
+            '--config' => 'my_config',
+        ]);
+
+        $output = new NullOutput();
+
+        $handler
+            ->handle($client->reveal(), 'my_index', 'my_type', 'my_config')
+            ->shouldBeCalled()
+        ;
+
+        $testedInstance->run($input, $output);
     }
 }

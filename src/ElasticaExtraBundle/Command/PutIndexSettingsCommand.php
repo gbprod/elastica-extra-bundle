@@ -24,6 +24,7 @@ class PutIndexSettingsCommand extends ElasticaAwareCommand
             ->setDescription('Put index settings from configuration')
             ->addArgument('index', InputArgument::REQUIRED, 'Which index ?')
             ->addOption('client', null, InputOption::VALUE_REQUIRED, 'Client to use (if not default)', null)
+            ->addOption('config', null, InputOption::VALUE_REQUIRED, 'Index configuration to use (if not the same as index argument)', null)
         ;
     }
 
@@ -34,6 +35,7 @@ class PutIndexSettingsCommand extends ElasticaAwareCommand
     {
         $client = $this->getClient($input->getOption('client'));
         $index  = $input->getArgument('index');
+        $config = $input->getOption('config') ?: $index;
 
         $output->writeln(sprintf(
             '<info>Put index <comment>%s</comment> settings for client <comment>%s</comment>...</info>',
@@ -46,7 +48,7 @@ class PutIndexSettingsCommand extends ElasticaAwareCommand
             ->get('gbprod.elastica_extra.put_index_settings_handler')
         ;
 
-        $handler->handle($client, $index);
+        $handler->handle($client, $index, $config);
 
         $output->writeln('done');
     }

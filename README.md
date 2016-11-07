@@ -81,7 +81,7 @@ Will create index using his configuration.
 php app/console elasticsearch:index:create my_index
 ```
 
-Will create index using another index configuration (usefull to use aliases)
+Will create index using another index configuration (usefull when using aliases)
 
 ```bash
 php app/console elasticsearch:index:create my_versionned_index --config=my_index
@@ -99,10 +99,22 @@ php app/console elasticsearch:index:delete my_index --force
 php app/console elasticsearch:index:put_settings my_index
 ```
 
+Will put index settings using another index configuration (usefull when using aliases)
+
+```bash
+php app/console elasticsearch:index:put_settings my_versionned_index --config=my_index
+```
+
 ### Put index mappings
 
 ```bash
 php app/console elasticsearch:index:put_mappings my_index my_type
+```
+
+Will put index mappings using another index configuration (usefull when using aliases)
+
+```bash
+php app/console elasticsearch:index:put_mappings my_versionned_index my_type --config=my_index
 ```
 
 ## Aliases Management Operations

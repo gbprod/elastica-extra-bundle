@@ -18,7 +18,7 @@ class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
     public function testHandle()
     {
         $config = [
-            'my_index' => [
+            'my_config' => [
                 'mappings' => [
                     'my_type' => [
                         'properties' => ['config'],
@@ -30,41 +30,23 @@ class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
 
         $repository = new IndexConfigurationRepository($config);
 
-        $type = $this->newType();
-        $index = $this->newIndex('my_type', $type);
-        $client = $this->newClient('my_index', $index);
+        $type = $this->prophesize(Type::class);
+        $index = $this->newIndex('my_type', $type->reveal());
+        $client = $this->newClient('my_index', $index->reveal());
 
         $testedInstance = new PutIndexMappingsHandler($repository);
 
-        $type
-            ->expects($this->once())
-            ->method('setMapping')
-            ->with(['config'])
-        ;
+        $type->setMapping(['config'])->shouldBeCalled();
 
-        $testedInstance->handle($client, 'my_index', 'my_type');
+        $testedInstance->handle($client->reveal(), 'my_index', 'my_type', 'my_config');
     }
 
-    private function newType()
-    {
-        return $this
-            ->getMockBuilder(Type::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-    }
     private function newIndex($typeName, $type)
     {
-        $index = $this
-            ->getMockBuilder(Index::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+        $index = $this->prophesize(Index::class);
 
         $index
-            ->expects($this->any())
-            ->method('getType')
-            ->with($typeName)
+            ->getType($typeName)
             ->willReturn($type)
         ;
 
@@ -73,16 +55,10 @@ class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
 
     private function newClient($indexName, $index)
     {
-        $client = $this
-            ->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+        $client = $this->prophesize(Client::class);
 
         $client
-            ->expects($this->any())
-            ->method('getIndex')
-            ->with($indexName)
+            ->getIndex($indexName)
             ->willReturn($index)
         ;
 
@@ -93,14 +69,14 @@ class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $repository = new IndexConfigurationRepository([]);
 
-        $type = $this->newType();
-        $index = $this->newIndex('my_type', $type);
-        $client = $this->newClient('my_index', $index);
+        $type = $this->prophesize(Type::class);
+        $index = $this->newIndex('my_type', $type->reveal());
+        $client = $this->newClient('my_index', $index->reveal());
 
         $testedInstance = new PutIndexMappingsHandler($repository);
 
         $this->setExpectedException(\InvalidArgumentException::class);
 
-        $testedInstance->handle($client, 'my_index', 'my_type');
+        $testedInstance->handle($client->reveal(), 'my_index', 'my_type', 'my_config');
     }
 }
