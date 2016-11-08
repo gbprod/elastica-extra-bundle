@@ -24,7 +24,7 @@ class CreateIndexCommand extends ElasticaAwareCommand
             ->setDescription('Create index from configuration')
             ->addArgument('index', InputArgument::REQUIRED, 'Which index ?')
             ->addOption('client', null, InputOption::VALUE_REQUIRED, 'Client to use (if not default)', null)
-            ->addOption('config', null, InputOption::VALUE_REQUIRED, 'Index configuration to use (if not the same as index argument)', null)
+            ->addOption('alias', null, InputOption::VALUE_REQUIRED, 'Index configuration to use (if not the same as index argument)', null)
         ;
     }
 
@@ -35,7 +35,7 @@ class CreateIndexCommand extends ElasticaAwareCommand
     {
         $client = $this->getClient($input->getOption('client'));
         $index  = $input->getArgument('index');
-        $config  = $input->getOption('config') ?: $index;
+        $alias  = $input->getOption('alias') ?: $index;
 
         $output->writeln(sprintf(
             '<info>Creating index <comment>%s</comment> for client <comment>%s</comment></info>',
@@ -48,7 +48,7 @@ class CreateIndexCommand extends ElasticaAwareCommand
             ->get('gbprod.elastica_extra.create_index_handler')
         ;
 
-        $handler->handle($client, $index, $config);
+        $handler->handle($client, $index, $alias);
 
         $output->writeln('done');
     }

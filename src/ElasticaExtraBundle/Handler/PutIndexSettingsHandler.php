@@ -16,14 +16,14 @@ class PutIndexSettingsHandler
     /**
      * @var IndexConfigurationRepository
      */
-    private $configurationRepository;
+    private $configurations;
 
     /**
-     * @param IndexConfigurationRepository $configurationRepository
+     * @param IndexConfigurationRepository $configurations
      */
-    public function __construct(IndexConfigurationRepository $configurationRepository)
+    public function __construct(IndexConfigurationRepository $configurations)
     {
-        $this->configurationRepository = $configurationRepository;
+        $this->configurations = $configurations;
     }
 
     /**
@@ -31,22 +31,17 @@ class PutIndexSettingsHandler
      *
      * @param Client $client
      * @param string $index
+     * @param string $alias
      */
-    public function handle(Client $client, $index)
+    public function handle(Client $client, $index, $alias)
     {
-        $settings = $this
-            ->configurationRepository
-            ->getSettings($index)
-        ;
+        $settings = $this->configurations->getSettings($alias);
 
         if (null === $settings) {
             throw new \InvalidArgumentException();
         }
 
-        $client
-            ->getIndex($index)
-            ->setSettings($settings)
-        ;
+        $client->getIndex($index)->setSettings($settings);
     }
 
 }

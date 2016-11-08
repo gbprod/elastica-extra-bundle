@@ -17,7 +17,7 @@ class PutIndexSettingsHandlerTest extends \PHPUnit_Framework_TestCase
     public function testHandle()
     {
         $config =  [
-            'my_index' => [
+            'my_alias' => [
                 'settings' => [
                     'awesome' => 'config'
                     ],
@@ -28,16 +28,16 @@ class PutIndexSettingsHandlerTest extends \PHPUnit_Framework_TestCase
         $index = $this->newIndex();
         $client = $this->newClient('my_index', $index);
         $repository = new IndexConfigurationRepository($config);
-        
+
         $testedInstance = new PutIndexSettingsHandler($repository);
-        
+
         $index
             ->expects($this->once())
             ->method('setSettings')
             ->with(['awesome' => 'config'])
         ;
-        
-        $testedInstance->handle($client, 'my_index');
+
+        $testedInstance->handle($client, 'my_index', 'my_alias');
     }
 
     private function newIndex()
@@ -63,20 +63,20 @@ class PutIndexSettingsHandlerTest extends \PHPUnit_Framework_TestCase
             ->with($indexName)
             ->willReturn($index)
         ;
-        
+
         return $client;
     }
-    
+
     public function testHandleThrowExceptionIfNoConfiguration()
     {
         $index = $this->newIndex();
         $client = $this->newClient('my_index', $index);
         $repository = new IndexConfigurationRepository([]);
-        
+
         $testedInstance = new PutIndexSettingsHandler($repository);
-        
+
         $this->setExpectedException(\InvalidArgumentException::class);
-        
-        $testedInstance->handle($client, 'my_index');
+
+        $testedInstance->handle($client, 'my_index', 'my_alias');
     }
 }

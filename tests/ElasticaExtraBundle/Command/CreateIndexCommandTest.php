@@ -143,14 +143,14 @@ class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
         $testedInstance->setContainer($container);
 
         $input = new ArrayInput([
-            'index'  => 'my_index',
-            '--config'  => 'my_custom_config',
+            'index'   => 'my_index',
+            '--alias' => 'my_alias',
         ]);
 
         $output = new NullOutput();
 
         $handler
-            ->handle($client->reveal(), 'my_index', 'my_custom_config')
+            ->handle($client->reveal(), 'my_index', 'my_alias')
             ->shouldBeCalled()
         ;
 
