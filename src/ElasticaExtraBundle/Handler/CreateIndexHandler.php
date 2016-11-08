@@ -30,19 +30,16 @@ class CreateIndexHandler
      *
      * @param Client $client
      * @param string $index
-     * @param string $configName
+     * @param string $alias
      */
-    public function handle(Client $client, $index, $configName)
+    public function handle(Client $client, $index, $alias)
     {
-        $config = $this->configurations->get($configName);
+        $config = $this->configurations->get($alias);
 
         if (null === $config) {
             throw new \InvalidArgumentException();
         }
 
-        $client
-            ->getIndex($index)
-            ->create($config)
-        ;
+        $client->getIndex($index)->create($config);
     }
 }

@@ -71,13 +71,13 @@ class PutIndexMappingsCommandTest extends \PHPUnit_Framework_TestCase
         $input = new ArrayInput([
             'index'    => 'my_index',
             'type'     => 'my_type',
-            '--config' => 'my_config',
+            '--alias' => 'my_alias',
         ]);
 
         $output = new NullOutput();
 
         $handler
-            ->handle($client->reveal(), 'my_index', 'my_type', 'my_config')
+            ->handle($client->reveal(), 'my_index', 'my_type', 'my_alias')
             ->shouldBeCalled()
         ;
 

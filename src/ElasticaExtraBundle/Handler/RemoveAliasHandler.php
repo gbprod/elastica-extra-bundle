@@ -20,9 +20,6 @@ class RemoveAliasHandler
      */
     public function handle(Client $client, $index, $alias)
     {
-        $client
-            ->getIndex($index)
-            ->removeAlias($alias)
-        ;
+        $client->getIndex($index)->removeAlias($alias);
     }
 }

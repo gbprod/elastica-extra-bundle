@@ -31,11 +31,11 @@ class PutIndexMappingsHandler
      * @param Client $client
      * @param string $index
      * @param string $type
-     * @param string $configName
+     * @param string $alias
      */
-    public function handle(Client $client, $index, $type, $configName)
+    public function handle(Client $client, $index, $type, $alias)
     {
-        $mapping = $this->configurations->getMapping($configName, $type);
+        $mapping = $this->configurations->getMapping($alias, $type);
 
         if (!$mapping) {
             throw new \InvalidArgumentException();
