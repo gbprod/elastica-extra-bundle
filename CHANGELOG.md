@@ -13,6 +13,7 @@ Added
  - VersionEye badge
  - Scrutinizer checks PSR2 codestyle
  - You can now specify an alias to use a different configuration when running `create` `put_settings` `put_mappings` commands
+ - Add list index command
 
 ## [0.3.0](https://github.com/gbprod/elastica-extra-bundle/compare/v0.2.0...v0.3.0)
 

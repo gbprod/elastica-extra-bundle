@@ -143,6 +143,20 @@ php app/console elasticsearch:alias:add my_index my_alias --replace
 php app/console elasticsearch:alias:remove my_index my_alias
 ```
 
+### List indices
+
+This command list indices
+
+```bash
+php app/console elasticsearch:index:list
+```
+
+You also can filter displayed indices using regex
+
+```bash
+php app/console elasticsearch:index:list --pattern="user*"
+```
+
 ### Use a different client
 
 For all commands you can specify a different client using `--client` option.
