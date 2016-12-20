@@ -19,7 +19,7 @@ class DeleteIndexHandlerTest extends \PHPUnit_Framework_TestCase
         $index = $this->newIndex();
         $client = $this->newClient('my_index', $index);
 
-        $testedInstance = new DeleteIndexHandler($repository);
+        $testedInstance = new DeleteIndexHandler();
 
         $index
             ->expects($this->once())
@@ -67,7 +67,7 @@ class DeleteIndexHandlerTest extends \PHPUnit_Framework_TestCase
         $index = $this->newIndex();
         $client = $this->newClient('my_index', $index);
 
-        $testedInstance = new DeleteIndexHandler($repository);
+        $testedInstance = new DeleteIndexHandler();
 
         $index
             ->expects($this->never())
