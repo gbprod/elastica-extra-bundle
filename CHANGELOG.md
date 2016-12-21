@@ -4,11 +4,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/gbprod/elastica-extra-bundle/compare/v0.3.0...HEAD)
 
-Removed
+### Changed
+
+- Upgrade to elastica 5.0
+- Drop Elastica 3.1 support
+- Drop Symfony 2.3 support
+
+### Added 
+
+- Contributing file
+
+## [0.4.0](https://github.com/gbprod/elastica-extra-bundle/compare/v0.3.0...v0.4.0)
+
+### Removed
 
 - composer.lock is not in sources anymore
 
-Added
+### Added
 
  - VersionEye badge
  - Scrutinizer checks PSR2 codestyle
@@ -18,6 +30,7 @@ Added
 ## [0.3.0](https://github.com/gbprod/elastica-extra-bundle/compare/v0.2.0...v0.3.0)
 
 ### Changed
+
 - Upgrade to elastica 3.2
 - Use codecov for coverage instead of scrutinizer
 - Delete not existing index will not throw exception anymore (replace by a info message)
