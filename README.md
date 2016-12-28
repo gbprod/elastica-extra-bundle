@@ -12,6 +12,13 @@
 
 Bundle providing extra elastica tools for managing indices and types settings.
 
+With this bundle you can :
+
+ - Manage index settings and mappings in yaml
+ - Create and delete index
+ - Manage indices' aliases
+ - Reindex
+
 ## Installation
 
 With composer :
@@ -155,6 +162,14 @@ You also can filter displayed indices using regex
 
 ```bash
 php app/console elasticsearch:index:list --pattern="user*"
+```
+
+### Reindex
+
+This command reindex using [reindex api](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html)
+
+```bash
+php app/console elasticsearch:reindex [old-index] [new-index]
 ```
 
 ### Use a different client
