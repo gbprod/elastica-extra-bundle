@@ -26,7 +26,9 @@ class ReindexHandler
      */
     public function handle(Client $client, $oldIndex, $newIndex)
     {
-        self::$crossIndexClassname::reindex(
+        $classname = self::$crossIndexClassname;
+
+        $classname::reindex(
             $client->getIndex($oldIndex),
             $client->getIndex($newIndex)
         );
