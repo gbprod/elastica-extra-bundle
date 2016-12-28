@@ -157,6 +157,14 @@ You also can filter displayed indices using regex
 php app/console elasticsearch:index:list --pattern="user*"
 ```
 
+### Reindex
+
+This command reindex using [reindex api](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html)
+
+```bash
+php app/console elasticsearch:reindex [old-index] [new-index]
+```
+
 ### Use a different client
 
 For all commands you can specify a different client using `--client` option.

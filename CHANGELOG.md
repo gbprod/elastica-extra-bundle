@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added 
 
 - Contributing file
+- Reindex command
 
 ## [0.4.0](https://github.com/gbprod/elastica-extra-bundle/compare/v0.3.0...v0.4.0)
 
