@@ -12,6 +12,13 @@
 
 Bundle providing extra elastica tools for managing indices and types settings.
 
+With this bundle you can :
+
+ - Manage index settings and mappings in yaml
+ - Create and delete index
+ - Manage indices' aliases
+ - Reindex
+
 ## Installation
 
 With composer :
