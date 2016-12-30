@@ -24,3 +24,6 @@ services:
 
     gbprod.elastica_extra.remove_alias_handler:
         class: GBProd\ElasticaExtraBundle\Handler\RemoveAliasHandler
+
+    gbprod.elastica_extra.reindex_handler:
+        class: GBProd\ElasticaExtraBundle\Handler\ReindexHandler

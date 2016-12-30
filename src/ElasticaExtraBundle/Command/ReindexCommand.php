@@ -21,7 +21,7 @@ class ReindexCommand extends ElasticaAwareCommand
     {
         $this
             ->setName('elasticsearch:reindex')
-            ->setDescription('Put index settings from configuration')
+            ->setDescription('Reindex an old index to the new one')
             ->addArgument('old-index', InputArgument::REQUIRED, 'Old index')
             ->addArgument('new-index', InputArgument::REQUIRED, 'New index')
             ->addOption('client', null, InputOption::VALUE_REQUIRED, 'Client to use (if not default)', null)

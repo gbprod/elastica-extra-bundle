@@ -9,6 +9,7 @@ use GBProd\ElasticaExtraBundle\Handler\CreateIndexHandler;
 use GBProd\ElasticaExtraBundle\Handler\DeleteIndexHandler;
 use GBProd\ElasticaExtraBundle\Handler\PutIndexMappingsHandler;
 use GBProd\ElasticaExtraBundle\Handler\PutIndexSettingsHandler;
+use GBProd\ElasticaExtraBundle\Handler\ReindexHandler;
 use GBProd\ElasticaExtraBundle\Handler\RemoveAliasHandler;
 use GBProd\ElasticaExtraBundle\Repository\IndexConfigurationRepository;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -48,6 +49,7 @@ class ElasticaExtraExtensionTest extends \PHPUnit_Framework_TestCase
             ['gbprod.elastica_extra.put_index_mappings_handler', PutIndexMappingsHandler::class],
             ['gbprod.elastica_extra.add_alias_handler', AddAliasHandler::class],
             ['gbprod.elastica_extra.remove_alias_handler', RemoveAliasHandler::class],
+            ['gbprod.elastica_extra.reindex_handler', ReindexHandler::class],
         ];
     }
 
