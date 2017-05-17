@@ -42,7 +42,7 @@ class ListIndexCommandTest extends TestCase
     {
         $this->client
             ->request('_cat/indices/?h=i')
-            ->willReturn($this->createResponseWithData("index1\nindex2"))
+            ->willReturn($this->createResponseWithData(['message' => "index1\nindex2"]))
         ;
 
         $this->container->set(
@@ -63,7 +63,7 @@ class ListIndexCommandTest extends TestCase
         $response = $this->prophesize(Response::class);
         $response
             ->getData()
-            ->willReturn(['message' => $data])
+            ->willReturn($data)
         ;
 
         return $response;
@@ -73,7 +73,7 @@ class ListIndexCommandTest extends TestCase
     {
         $this->client
             ->request('_cat/indices/user*?h=i')
-            ->willReturn($this->createResponseWithData("index1\nindex2"))
+            ->willReturn($this->createResponseWithData(['message' => "index1\nindex2"]))
         ;
 
         $this->container->set(
@@ -89,5 +89,22 @@ class ListIndexCommandTest extends TestCase
             "index1\nindex2\n",
             $this->commandTester->getDisplay()
         );
+    }
+
+    public function testListIndicesIfNoIndices()
+    {
+        $this->client
+            ->request('_cat/indices/?h=i')
+            ->willReturn($this->createResponseWithData(null))
+        ;
+
+        $this->container->set(
+            'gbprod.elastica_extra.default_client',
+            $this->client->reveal()
+        );
+
+        $this->commandTester->execute([]);
+
+        $this->assertEmpty($this->commandTester->getDisplay());
     }
 }

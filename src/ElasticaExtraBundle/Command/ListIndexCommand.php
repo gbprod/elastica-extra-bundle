@@ -37,11 +37,14 @@ class ListIndexCommand extends ElasticaAwareCommand
         $uri = sprintf('_cat/indices/%s?h=i', $input->getOption('pattern'));
         $response = $client->request($uri);
 
-        $indices = $this->extractIndices($response->getData()['message']);
+        if (isset($response->getData()['message'])) {
+            $indices = $this->extractIndices($response->getData()['message']);
 
-        foreach ($indices as $index) {
-            $output->writeln($index);
+            foreach ($indices as $index) {
+                $output->writeln($index);
+            }
         }
+
     }
 
     private function extractIndices($data)

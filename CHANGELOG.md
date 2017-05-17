@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Upgrade to elastica 6.0
 - Add Symfony 4.0 support
+- fix: listing indices without indices was throwing an error
 
 ## [1.0.0](https://github.com/gbprod/elastica-extra-bundle/compare/v0.3.0...v1.0.0)
 
