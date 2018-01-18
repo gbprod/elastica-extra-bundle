@@ -3,13 +3,14 @@
 namespace Tests\GBProd\ElasticaExtraBundle\Repository;
 
 use GBProd\ElasticaExtraBundle\Repository\IndexConfigurationRepository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for IndexConfigurationRepository
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class IndexConfigurationRepositoryTest extends \PHPUnit_Framework_TestCase
+class IndexConfigurationRepositoryTest extends TestCase
 {
     public function testGetReturnsConfig()
     {

@@ -5,13 +5,14 @@ namespace Tests\GBProd\ElasticaExtraBundle\Handler;
 use Elastica\Client;
 use Elastica\Index;
 use GBProd\ElasticaExtraBundle\Handler\AddAliasHandler;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for AddAliasHandler
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class AddAliasHandlerTest extends \PHPUnit_Framework_TestCase
+class AddAliasHandlerTest extends TestCase
 {
     public function testHandle()
     {

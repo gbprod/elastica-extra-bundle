@@ -5,13 +5,14 @@ namespace Tests\GBProd\ElasticaExtraBundle\Handler;
 use Elastica\Client;
 use Elastica\Index;
 use GBProd\ElasticaExtraBundle\Handler\RemoveAliasHandler;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for RemoveAliasHandler
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class RemoveAliasHandlerTest extends \PHPUnit_Framework_TestCase
+class RemoveAliasHandlerTest extends TestCase
 {
     public function testHandle()
     {

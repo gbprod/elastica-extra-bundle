@@ -5,15 +5,16 @@ namespace Tests\GBProd\ElasticaExtraBundle\Handler;
 use Elastica\Client;
 use Elastica\Index;
 use Elastica\Type;
-use GBProd\ElasticaExtraBundle\Repository\IndexConfigurationRepository;
 use GBProd\ElasticaExtraBundle\Handler\PutIndexMappingsHandler;
+use GBProd\ElasticaExtraBundle\Repository\IndexConfigurationRepository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for PutIndexMappingssHandler
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
+class PutIndexMappingsHandlerTest extends TestCase
 {
     public function testHandle()
     {
@@ -75,7 +76,7 @@ class PutIndexMappingsHandlerTest extends \PHPUnit_Framework_TestCase
 
         $testedInstance = new PutIndexMappingsHandler($repository);
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $testedInstance->handle($client->reveal(), 'my_index', 'my_type', 'my_config');
     }

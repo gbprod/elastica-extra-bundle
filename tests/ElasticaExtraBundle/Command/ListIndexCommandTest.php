@@ -6,6 +6,7 @@ use Elastica\Client;
 use Elastica\Index;
 use Elastica\Response;
 use GBProd\ElasticaExtraBundle\Command\ListIndexCommand;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -16,7 +17,7 @@ use Symfony\Component\DependencyInjection\Container;
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class ListIndexCommandTest extends \PHPUnit_Framework_TestCase
+class ListIndexCommandTest extends TestCase
 {
     private $testedInstance;
     private $client;
