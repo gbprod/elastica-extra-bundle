@@ -5,6 +5,7 @@ namespace Tests\GBProd\ElasticaExtraBundle\Command;
 use Elastica\Client;
 use GBProd\ElasticaExtraBundle\Command\ReindexCommand;
 use GBProd\ElasticaExtraBundle\Handler\ReindexHandler;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\DependencyInjection\Container;
@@ -15,7 +16,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class ReindexCommandTest extends \PHPUnit_Framework_TestCase
+class ReindexCommandTest extends TestCase
 {
     public function testCommandCallHandler()
     {

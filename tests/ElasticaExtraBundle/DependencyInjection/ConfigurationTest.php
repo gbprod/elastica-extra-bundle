@@ -3,6 +3,7 @@
 namespace Tests\GBProd\ElasticaExtraBundle\DependencyInjection;
 
 use GBProd\ElasticaExtraBundle\DependencyInjection\Configuration;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 
 /**
@@ -10,7 +11,7 @@ use Symfony\Component\Config\Definition\Processor;
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     public function testEmptyConfiguration()
     {

@@ -3,13 +3,14 @@
 namespace Tests\GBProd\ElasticaExtraBundle\Exception;
 
 use GBProd\ElasticaExtraBundle\Exception\IndexNotFoundException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for IndexNotFoundException
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class IndexNotFoundExceptionTest extends \PHPUnit_Framework_TestCase
+class IndexNotFoundExceptionTest extends TestCase
 {
     public function testConstruct()
     {

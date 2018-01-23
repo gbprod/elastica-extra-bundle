@@ -12,6 +12,7 @@ use GBProd\ElasticaExtraBundle\Handler\PutIndexSettingsHandler;
 use GBProd\ElasticaExtraBundle\Handler\ReindexHandler;
 use GBProd\ElasticaExtraBundle\Handler\RemoveAliasHandler;
 use GBProd\ElasticaExtraBundle\Repository\IndexConfigurationRepository;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -20,7 +21,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class ElasticaExtraExtensionTest extends \PHPUnit_Framework_TestCase
+class ElasticaExtraExtensionTest extends TestCase
 {
     public function setUp()
     {

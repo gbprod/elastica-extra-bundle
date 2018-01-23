@@ -5,13 +5,14 @@ namespace Tests\GBProd\ElasticaExtraBundle\Handler;
 use Elastica\Client;
 use Elastica\Index;
 use GBProd\ElasticaExtraBundle\Handler\ReindexHandler;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for ReindexHandler
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class ReindexHandlerTest extends \PHPUnit_Framework_TestCase
+class ReindexHandlerTest extends TestCase
 {
     private static $expectedReindexParameters = [];
 

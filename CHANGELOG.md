@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/gbprod/elastica-extra-bundle/compare/v1.0.0...HEAD)
 
+- Upgrade to elastica 6.0
+- Add Symfony 4.0 support
+
 ## [1.0.0](https://github.com/gbprod/elastica-extra-bundle/compare/v0.3.0...v1.0.0)
 
 ### Changed

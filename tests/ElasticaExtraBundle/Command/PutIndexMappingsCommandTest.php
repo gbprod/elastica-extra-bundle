@@ -5,6 +5,7 @@ namespace Tests\GBProd\ElasticaExtraBundle\Command;
 use Elastica\Client;
 use GBProd\ElasticaExtraBundle\Command\PutIndexMappingsCommand;
 use GBProd\ElasticaExtraBundle\Handler\PutIndexMappingsHandler;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\DependencyInjection\Container;
@@ -14,7 +15,7 @@ use Symfony\Component\DependencyInjection\Container;
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class PutIndexMappingsCommandTest extends \PHPUnit_Framework_TestCase
+class PutIndexMappingsCommandTest extends TestCase
 {
     public function testPutIndexMappingsCallsHandler()
     {

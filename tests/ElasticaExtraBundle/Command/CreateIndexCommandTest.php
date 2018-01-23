@@ -5,6 +5,7 @@ namespace Tests\GBProd\ElasticaExtraBundle\Command;
 use Elastica\Client;
 use GBProd\ElasticaExtraBundle\Command\CreateIndexCommand;
 use GBProd\ElasticaExtraBundle\Handler\CreateIndexHandler;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\DependencyInjection\Container;
@@ -15,7 +16,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
+class CreateIndexCommandTest extends TestCase
 {
     public function testCreateIndexCallsHandler()
     {
@@ -73,7 +74,7 @@ class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
 
         $output = new NullOutput();
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $testedInstance->run($input, $output);
     }
@@ -96,7 +97,7 @@ class CreateIndexCommandTest extends \PHPUnit_Framework_TestCase
 
         $output = new NullOutput();
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $testedInstance->run($input, $output);
     }

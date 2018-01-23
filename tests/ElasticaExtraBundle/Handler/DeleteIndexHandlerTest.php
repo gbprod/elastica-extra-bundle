@@ -6,13 +6,14 @@ use Elastica\Client;
 use Elastica\Index;
 use GBProd\ElasticaExtraBundle\Exception\IndexNotFoundException;
 use GBProd\ElasticaExtraBundle\Handler\DeleteIndexHandler;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for DeleteIndexHandler
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class DeleteIndexHandlerTest extends \PHPUnit_Framework_TestCase
+class DeleteIndexHandlerTest extends TestCase
 {
     public function testHandle()
     {
@@ -80,7 +81,7 @@ class DeleteIndexHandlerTest extends \PHPUnit_Framework_TestCase
             ->willReturn(false)
         ;
 
-        $this->setExpectedException(IndexNotFoundException::class);
+        $this->expectException(IndexNotFoundException::class);
 
         $testedInstance->handle($client, 'my_index');
     }

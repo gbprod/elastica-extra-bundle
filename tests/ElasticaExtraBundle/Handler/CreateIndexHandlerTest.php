@@ -4,15 +4,16 @@ namespace Tests\GBProd\ElasticaExtraBundle\Handler;
 
 use Elastica\Client;
 use Elastica\Index;
-use GBProd\ElasticaExtraBundle\Repository\IndexConfigurationRepository;
 use GBProd\ElasticaExtraBundle\Handler\CreateIndexHandler;
+use GBProd\ElasticaExtraBundle\Repository\IndexConfigurationRepository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for CreateIndexHandler
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class CreateIndexHandlerTest extends \PHPUnit_Framework_TestCase
+class CreateIndexHandlerTest extends TestCase
 {
     public function testHandle()
     {
@@ -64,7 +65,7 @@ class CreateIndexHandlerTest extends \PHPUnit_Framework_TestCase
 
         $testedInstance = new CreateIndexHandler($repository);
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $testedInstance->handle($client->reveal(), 'my_index', 'my_config');
     }
