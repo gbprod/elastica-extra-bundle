@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/gbprod/elastica-extra-bundle/compare/v1.1.0...HEAD)
 
+ - Change licence
+
 ## [1.1.0](https://github.com/gbprod/elastica-extra-bundle/compare/v1.0.0...1.1.0)
 
 - Upgrade to elastica 6.0
